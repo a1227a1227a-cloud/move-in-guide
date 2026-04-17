@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="theme-color" content="#f5ede3"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="名古屋之旅"/>
+<link rel="manifest" href="manifest.webmanifest"/>
+<!-- Apple Touch Icons -->
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<title>Nagoya Family Trip 2026</title>
+
+<!-- Google Fonts: Noto Sans TC (繁中) + Playfair Display (英文標題) -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        cream:    '#fdf8f2',
+        milk:     '#fffdf9',
+        blush:    '#f5d9c8',
+        petal:    '#f0c8c0',
+        apricot:  '#e8c4a0',
+        sand:     '#d4b896',
+        warmgray: '#b5a89a',
+        stone:    '#8c7b6e',
+        cocoa:    '#5c4a3a',
+        sakura:   '#e8b4b8',
+        sky:      '#c8dde8',
+        sage:     '#c4d4c0',
+        gold:     '#c8a87a',
+      },
+      fontFamily: {
+        body:    ['"Noto Sans TC"', 'sans-serif'],
+        display: ['"DM Serif Display"', 'serif'],
+        serif:   ['"Playfair Display"', 'serif'],
+      },
+      borderRadius: { xl2: '1.25rem', xl3: '1.5rem', xl4: '2rem' },
+      boxShadow: {
+        soft: '0 2px 20px rgba(92,74,58,0.08)',
+        card: '0 4px 30px rgba(92,74,58,0.10)',
+        float:'0 8px 32px rgba(92,74,58,0.15)',
+      },
+    }
+  }
+}
+</script>
+
+<style>
+/* ============================================================
+   GLOBAL BASE
+============================================================ */
+*, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: #fdf8f2;
+  color: #3a2e26;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: 88px; /* space for bottom nav */
+  -webkit-font-smoothing: antialiased;
+}
+/* Safe area for iPhone notch */
+body { padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
+/* ============================================================
+   BOTTOM NAV
+============================================================ */
+#bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+  background: rgba(253,248,242,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(212,184,150,0.3);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.nav-btn {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 3px; padding: 10px 0; flex: 1;
+  color: #b5a89a; transition: color .2s;
+  border: none; background: none; cursor: pointer;
+}
+.nav-btn.active { color: #c8a87a; }
+.nav-btn i { font-size: 18px; }
+.nav-btn span { font-size: 9px; font-weight: 600; letter-spacing: .06em; }
+/* ============================================================
+   PAGES
+============================================================ */
+.page { display: none; }
+.page.active { display: block; animation: fadeUp .32s ease; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* ============================================================
+   HERO
+============================================================ */
+#hero-section {
+  /* ★ 之後要換首頁封面圖：把下方 background-image 的 URL 換成你的照片 URL ★ */
+  background: linear-gradient(160deg, #f0c8c0 0%, #e8c4a0 40%, #d4b896 100%);
+  position: relative; overflow: hidden;
+  min-height: 56vw; max-height: 340px;
+  display: flex; align-items: flex-end;
+}
+.hero-photo-placeholder {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg,#f5d9c8 0%,#e8c4a0 55%,#c4d4c0 100%);
+  opacity: 1;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(58,46,38,.25) 0%, transparent 50%);
+}
+.hero-content { position: relative; z-index: 1; padding: 20px 20px 28px; }
+.hero-title { font-family: 'DM Serif Display', serif; font-size: 28px; color: #fff; line-height: 1.15; }
+.hero-sub { font-size: 12px; color: rgba(255,255,255,.85); letter-spacing: .1em; margin-top: 4px; }
+.hero-date-badge {
+  display: inline-block; margin-top: 10px;
+  background: rgba(255,255,255,.22); color: #fff;
+  padding: 4px 12px; border-radius: 99px;
+  font-size: 11px; letter-spacing: .08em; backdrop-filter: blur(8px);
+}
+/* ============================================================
+   CARDS
+============================================================ */
+.card {
+  background: #fff; border-radius: 20px;
+  box-shadow: 0 2px 16px rgba(92,74,58,.07);
+  padding: 18px; margin: 0 0 14px;
+}
+.card-sm { padding: 14px; border-radius: 16px; }
+.section-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .14em;
+  color: #b5a89a; text-transform: uppercase; margin-bottom: 10px;
+}
+/* ============================================================
+   TIMELINE
+============================================================ */
+.timeline-day { position: relative; }
+.timeline-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #c8a87a; flex-shrink: 0; margin-top: 6px;
+}
+.timeline-line {
+  position: absolute; left: 4px; top: 20px; bottom: -14px;
+  width: 2px; background: linear-gradient(to bottom, #c8a87a33, transparent);
+}
+.time-chip {
+  display: inline-block; background: #f5d9c8;
+  color: #8c7b6e; font-size: 10px; font-weight: 600;
+  padding: 2px 8px; border-radius: 99px; margin-right: 4px;
+}
+.alert-chip {
+  display: inline-block; background: #e8b4b8;
+  color: #7a3a40; font-size: 10px; font-weight: 700;
+  padding: 3px 10px; border-radius: 99px;
+  letter-spacing: .04em;
+}
+.tag-chip {
+  display: inline-block; font-size: 10px; font-weight: 600;
+  padding: 2px 8px; border-radius: 99px; margin: 2px 2px 0 0;
+}
+.tag-must   { background:#fde8e0; color:#c05030; }
+.tag-skip   { background:#e8f0e8; color:#4a7a4a; }
+.tag-easy   { background:#e8eef5; color:#3a5a7a; }
+/* ============================================================
+   FOOD CARDS
+============================================================ */
+.food-card { border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 2px 14px rgba(92,74,58,.07); }
+.food-img-placeholder {
+  /* ★ 餐廳照片預留區 — 可用 CSS background-image 替換 ★ */
+  height: 110px; background: linear-gradient(135deg, #f5d9c8, #e8c4a0);
+  display: flex; align-items: center; justify-content: center; font-size: 28px;
+}
+.food-label { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+.food-tag-must   { background:#fde8e0; color:#c05030; }
+.food-tag-budget { background:#e8f4e8; color:#3a7a3a; }
+.food-tag-family { background:#e8eef8; color:#3a4a8a; }
+.food-tag-bbq    { background:#fdf0e0; color:#8a5a1a; }
+.food-tag-sweets { background:#f4e8f4; color:#7a3a8a; }
+.food-tag-ramen  { background:#fff0e8; color:#c05820; }
+.food-tag-katsu  { background:#f8f0e0; color:#7a5a00; }
+.food-tag-eel    { background:#e8f4f0; color:#2a7a5a; }
+.food-tag-book   { background:#fde8f0; color:#9a2a5a; }
+.food-tag-handy  { background:#e8f0e8; color:#2a6a3a; }
+/* ============================================================
+   WALLET
+============================================================ */
+.wallet-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f0e8e0; }
+.wallet-thumb { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; background: #f5ede3; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+/* ============================================================
+   CHECKLIST
+============================================================ */
+.check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f5ede3; }
+.check-item input[type=checkbox] { width: 18px; height: 18px; border-radius: 6px; accent-color: #c8a87a; flex-shrink: 0; margin-top: 1px; cursor: pointer; }
+.check-item.done label { text-decoration: line-through; color: #b5a89a; }
+/* ============================================================
+   INFO
+============================================================ */
+.info-section { margin-bottom: 20px; }
+.info-section h3 { font-size: 13px; font-weight: 700; color: #5c4a3a; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.info-row { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f5ede3; font-size: 13px; }
+.info-label { color: #b5a89a; font-size: 11px; font-weight: 600; min-width: 72px; padding-top: 1px; }
+.alert-card-big {
+  background: linear-gradient(135deg, #f5d9c8, #e8b4b8);
+  border-radius: 18px; padding: 18px; margin-bottom: 14px;
+}
+/* ============================================================
+   FILTER TABS
+============================================================ */
+.filter-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 0 16px 12px; -ms-overflow-style: none; scrollbar-width: none; }
+.filter-scroll::-webkit-scrollbar { display: none; }
+.filter-tab { flex-shrink: 0; padding: 6px 14px; border-radius: 99px; font-size: 12px; font-weight: 600; border: 1.5px solid #e0d0c0; color: #8c7b6e; background: #fff; cursor: pointer; transition: all .18s; white-space: nowrap; }
+.filter-tab.active { background: #c8a87a; color: #fff; border-color: #c8a87a; }
+/* ============================================================
+   ACCORDION
+============================================================ */
+.accordion-body { display: none; }
+.accordion-body.open { display: block; }
+/* ============================================================
+   MISC
+============================================================ */
+.px-page { padding-left: 16px; padding-right: 16px; }
+.mb-section { margin-bottom: 24px; }
+input, textarea, select {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 14px; outline: none;
+}
+.btn-primary {
+  background: #c8a87a; color: #fff;
+  border-radius: 12px; padding: 10px 18px;
+  font-weight: 600; font-size: 13px;
+  border: none; cursor: pointer; transition: opacity .18s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-primary:active { opacity: .8; }
+.btn-ghost {
+  background: #f5ede3; color: #8c7b6e;
+  border-radius: 12px; padding: 10px 18px;
+  font-weight: 600; font-size: 13px;
+  border: none; cursor: pointer; transition: opacity .18s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.quick-btn {
+  flex: 1; background: #fff; border-radius: 14px;
+  padding: 14px 8px; text-align: center;
+  box-shadow: 0 2px 10px rgba(92,74,58,.07);
+  cursor: pointer; transition: transform .15s;
+  border: none;
+}
+.quick-btn:active { transform: scale(.96); }
+.quick-btn i { font-size: 20px; display: block; margin-bottom: 4px; }
+.quick-btn span { font-size: 11px; font-weight: 600; color: #5c4a3a; }
+/* ============================================================
+   MODAL
+============================================================ */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 2000; display: flex; align-items: flex-end; }
+.modal-overlay.hidden { display: none; }
+.modal-sheet { background: #fdf8f2; border-radius: 24px 24px 0 0; width: 100%; max-height: 85vh; overflow-y: auto; padding: 20px 20px calc(20px + env(safe-area-inset-bottom)); }
+.modal-handle { width: 40px; height: 4px; background: #e0d0c0; border-radius: 99px; margin: 0 auto 18px; }
+/* ============================================================
+   PHOTO CAROUSEL PLACEHOLDER
+============================================================ */
+.photo-carousel { display: flex; gap: 10px; overflow-x: auto; padding: 4px 0 8px; -ms-overflow-style: none; scrollbar-width: none; }
+.photo-carousel::-webkit-scrollbar { display: none; }
+.photo-slot {
+  /* ★ 之後要放旅遊照片請換這裡的 background ★ */
+  width: 120px; height: 100px; border-radius: 14px; flex-shrink: 0;
+  background: linear-gradient(135deg, #f5d9c8, #c4d4c0);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; color: rgba(92,74,58,.3);
+}
+</style>
+
+</head>
+<body class="font-body">
+
+<!-- ============================================================
+     BOTTOM NAVIGATION
+============================================================ -->
+
+<nav id="bottom-nav">
+  <div style="display:flex; max-width:480px; margin:0 auto;">
+    <button class="nav-btn active" data-page="home" onclick="showPage('home',this)">
+      <i class="fa-solid fa-house-chimney"></i><span>HOME</span>
+    </button>
+    <button class="nav-btn" data-page="plan" onclick="showPage('plan',this)">
+      <i class="fa-solid fa-map-location-dot"></i><span>PLAN</span>
+    </button>
+    <button class="nav-btn" data-page="food" onclick="showPage('food',this)">
+      <i class="fa-solid fa-bowl-rice"></i><span>FOOD</span>
+    </button>
+    <button class="nav-btn" data-page="wallet" onclick="showPage('wallet',this)">
+      <i class="fa-solid fa-wallet"></i><span>WALLET</span>
+    </button>
+    <button class="nav-btn" data-page="lists" onclick="showPage('lists',this)">
+      <i class="fa-solid fa-list-check"></i><span>LISTS</span>
+    </button>
+    <button class="nav-btn" data-page="info" onclick="showPage('info',this)">
+      <i class="fa-solid fa-circle-info"></i><span>INFO</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ============================================================
+     PAGE: HOME
+============================================================ -->
+
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+
+  <div id="hero-section">
+    <div class="hero-photo-placeholder"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div style="font-size:10px;letter-spacing:.15em;color:rgba(255,255,255,.75);text-transform:uppercase;margin-bottom:4px;">Family Trip · Nagoya 2026</div>
+      <div class="hero-title">名古屋<br/>親子之旅</div>
+      <div class="hero-date-badge"><i class="fa-regular fa-calendar" style="margin-right:5px;"></i>4/18 – 4/25 · 8 Days</div>
+    </div>
+  </div>
+
+  <div style="padding:18px 16px 0;">
+
+```
+<!-- Tagline -->
+<div style="text-align:center;padding:14px 0 18px;">
+  <div style="font-family:'DM Serif Display',serif;font-size:15px;color:#8c7b6e;font-style:italic;line-height:1.6;">
+    "慢慢走，順路玩，一家三口的小確幸旅行 ✦"
+  </div>
+</div>
+
+<!-- Alert: Next Important Event -->
+<div class="section-label">⚡ 下一個重要集合</div>
+<div class="alert-card-big" onclick="showPage('plan',document.querySelector('[data-page=plan]'))">
+  <div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#7a3a40;text-transform:uppercase;margin-bottom:6px;">重要集合提醒</div>
+  <div style="font-weight:700;font-size:17px;color:#3a1a1e;margin-bottom:4px;" id="home-next-alert-title">4/20 馬籠宿一日遊</div>
+  <div style="font-size:13px;color:#5a2a30;margin-bottom:8px;" id="home-next-alert-detail">集合：Mini Stop 名駅西店門前（椿町 5-10）</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;">
+    <span class="alert-chip">⏰ 集合時間請確認行程</span>
+    <span class="alert-chip">📍 靠近 VIA INN</span>
+  </div>
+</div>
+
+<!-- 住宿摘要 -->
+<div class="section-label">🏨 住宿安排</div>
+<div style="display:flex;gap:10px;margin-bottom:14px;">
+  <div class="card" style="flex:1;margin:0;">
+    <div style="font-size:10px;font-weight:600;color:#c8a87a;margin-bottom:4px;">4/18–4/20</div>
+    <div style="font-weight:700;font-size:13px;color:#3a2e26;">VIA INN<br/>椿町・大床房</div>
+    <div style="font-size:10px;color:#8c7b6e;margin-top:4px;">CCP563999</div>
+  </div>
+  <div class="card" style="flex:1;margin:0;border:1.5px solid #f5d878;">
+    <div style="font-size:10px;font-weight:600;color:#c8a87a;margin-bottom:4px;">4/20–4/21 ⚠️</div>
+    <div style="font-weight:700;font-size:13px;color:#3a2e26;">VIA INN<br/>椿町・換雙人房</div>
+    <div style="font-size:10px;color:#b5803a;margin-top:4px;font-weight:700;">回來要換房！</div>
+  </div>
+</div>
+<div style="display:flex;gap:10px;margin-bottom:18px;">
+  <div class="card" style="flex:1;margin:0;">
+    <div style="font-size:10px;font-weight:600;color:#c8a87a;margin-bottom:4px;">4/21–4/23</div>
+    <div style="font-weight:700;font-size:13px;color:#3a2e26;">立山黑部<br/>行程附住宿</div>
+    <div style="font-size:10px;color:#8c7b6e;margin-top:4px;">含餐安排</div>
+  </div>
+  <div class="card" style="flex:1;margin:0;">
+    <div style="font-size:10px;font-weight:600;color:#c8a87a;margin-bottom:4px;">4/23–4/25</div>
+    <div style="font-weight:700;font-size:13px;color:#3a2e26;">竹亭高級<br/>名站南</div>
+    <div style="font-size:10px;color:#8c7b6e;margin-top:4px;">附早餐</div>
+  </div>
+</div>
+
+<!-- Today's Highlight -->
+<div class="section-label">📅 行程亮點</div>
+<div class="card" id="home-today-card">
+  <div style="font-size:11px;color:#c8a87a;font-weight:600;margin-bottom:6px;">4/18 Day 1 · 抵達名古屋</div>
+  <div style="font-weight:700;font-size:15px;margin-bottom:8px;">✈️ FLIGHT OF DREAMS → 熱田神宮</div>
+  <div style="font-size:13px;color:#8c7b6e;line-height:1.6;">降落後先去 FLIGHT OF DREAMS 讓小孩發洩能量，晚上可選熱田神宮或大須商店街，輕鬆展開旅程。</div>
+</div>
+
+<!-- 天氣穿搭提醒 -->
+<div class="section-label">🌸 天氣與穿搭</div>
+<div class="card" style="background:linear-gradient(135deg,#f5f0e8,#fff);">
+  <div style="font-weight:700;font-size:14px;margin-bottom:6px;">4月中下旬名古屋</div>
+  <div style="font-size:13px;color:#5c4a3a;line-height:1.7;">
+    🌡 白天約 18–23°C，早晚稍涼（12–15°C）<br/>
+    🧥 薄外套必備，日夜溫差 8–10°C<br/>
+    👟 走路多，建議輕便防滑鞋<br/>
+    🌂 4月偶有陣雨，摺疊傘帶著不吃虧<br/>
+    👶 小孩多準備一件薄刷毛或連帽外套
+  </div>
+</div>
+
+<!-- 照片輪播區 -->
+<div class="section-label">📸 旅遊相片</div>
+<!-- ★ 之後要放照片，把 photo-slot 的 background-image 換成你的照片 URL ★ -->
+<div class="photo-carousel">
+  <div class="photo-slot">🏯</div>
+  <div class="photo-slot">🐟</div>
+  <div class="photo-slot">🌸</div>
+  <div class="photo-slot">🍱</div>
+  <div class="photo-slot">🎡</div>
+</div>
+<div style="font-size:11px;color:#b5a89a;text-align:center;margin-top:4px;margin-bottom:18px;">旅遊後放入照片，變成你的旅行手帳</div>
+
+<!-- Quick Actions -->
+<div class="section-label">⚡ 快速進入</div>
+<div style="display:flex;gap:10px;margin-bottom:24px;">
+  <button class="quick-btn" onclick="showPage('wallet',document.querySelector('[data-page=wallet]'))">
+    <i class="fa-solid fa-wallet" style="color:#c8a87a;"></i>
+    <span>記帳</span>
+  </button>
+  <button class="quick-btn" onclick="showPage('lists',document.querySelector('[data-page=lists]'))">
+    <i class="fa-solid fa-list-check" style="color:#c8dde8;"></i>
+    <span>清單</span>
+  </button>
+  <button class="quick-btn" onclick="showPage('info',document.querySelector('[data-page=info]'))">
+    <i class="fa-solid fa-passport" style="color:#c4d4c0;"></i>
+    <span>憑證</span>
+  </button>
+  <button class="quick-btn" onclick="showPage('plan',document.querySelector('[data-page=plan]'))">
+    <i class="fa-solid fa-map" style="color:#e8b4b8;"></i>
+    <span>行程</span>
+  </button>
+</div>
+```
+
+  </div>
+</div><!-- /page-home -->
+
+<!-- ============================================================
+     PAGE: PLAN
+============================================================ -->
+
+<div id="page-plan" class="page">
+  <div style="padding:20px 16px 0;">
+    <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#3a2e26;margin-bottom:4px;">行程規劃</div>
+    <div style="font-size:12px;color:#b5a89a;margin-bottom:14px;">8 Days · Nagoya Family 2026</div>
+
+```
+<!-- 微調工具列 -->
+<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+  <button onclick="planToggleAll(true)"
+    style="background:#f5ede3;color:#5c4a3a;border:none;border-radius:99px;padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;">
+    <i class="fa-solid fa-angles-down" style="color:#c8a87a;"></i> 全部展開
+  </button>
+  <button onclick="planToggleAll(false)"
+    style="background:#f5ede3;color:#5c4a3a;border:none;border-radius:99px;padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;">
+    <i class="fa-solid fa-angles-up" style="color:#c8a87a;"></i> 全部收起
+  </button>
+  <button onclick="planJumpToday()"
+    style="background:#c8a87a;color:#fff;border:none;border-radius:99px;padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;">
+    <i class="fa-solid fa-location-crosshairs"></i> 今天
+  </button>
+  <button onclick="planShowOnlyMust()"
+    style="background:#fde8e0;color:#c05030;border:none;border-radius:99px;padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;">
+    <i class="fa-solid fa-star"></i> 只看必做
+  </button>
+  <button onclick="planShowAll()"
+    style="background:#f5ede3;color:#5c4a3a;border:none;border-radius:99px;padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;">
+    全部顯示
+  </button>
+</div>
+
+<div id="plan-container">
+  <!-- 由 JS renderPlan() 填入 -->
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ============================================================
+     PAGE: FOOD
+============================================================ -->
+
+<div id="page-food" class="page">
+  <div style="padding:20px 0 0;">
+    <div style="padding:0 16px;font-family:'DM Serif Display',serif;font-size:22px;color:#3a2e26;margin-bottom:4px;">美食地圖</div>
+    <div style="padding:0 16px;font-size:12px;color:#b5a89a;margin-bottom:16px;">名古屋必吃 · 親子友善</div>
+
+```
+<!-- Filter Tabs -->
+<div class="filter-scroll" id="food-filters">
+  <button class="filter-tab active" data-cat="all" onclick="filterFood('all',this)">全部</button>
+  <button class="filter-tab" data-cat="must" onclick="filterFood('must',this)">必吃名古屋</button>
+  <button class="filter-tab" data-cat="budget" onclick="filterFood('budget',this)">高 CP 值</button>
+  <button class="filter-tab" data-cat="family" onclick="filterFood('family',this)">親子友善</button>
+  <button class="filter-tab" data-cat="bbq" onclick="filterFood('bbq',this)">吃到飽</button>
+  <button class="filter-tab" data-cat="sweets" onclick="filterFood('sweets',this)">甜點/下午茶</button>
+  <button class="filter-tab" data-cat="ramen" onclick="filterFood('ramen',this)">拉麵</button>
+  <button class="filter-tab" data-cat="katsu" onclick="filterFood('katsu',this)">豬排</button>
+  <button class="filter-tab" data-cat="eel" onclick="filterFood('eel',this)">鰻魚飯</button>
+</div>
+
+<div id="food-grid" style="padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+  <!-- 由 JS renderFood() 填入 -->
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ============================================================
+     PAGE: WALLET
+============================================================ -->
+
+<div id="page-wallet" class="page">
+  <div style="padding:20px 16px 0;">
+    <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#3a2e26;margin-bottom:4px;">旅行記帳</div>
+    <div style="font-size:12px;color:#b5a89a;margin-bottom:20px;">匯率換算 · 收支紀錄</div>
+
+```
+<!-- 匯率換算器 -->
+<div class="section-label">💱 匯率換算器</div>
+<div class="card" style="margin-bottom:18px;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+    <div style="font-size:12px;color:#8c7b6e;white-space:nowrap;">1 TWD =</div>
+    <input id="rate-input" type="number" placeholder="4.65" step="0.01"
+      style="flex:1;border:1.5px solid #e0d0c0;border-radius:10px;padding:8px 12px;background:#fdf8f2;color:#3a2e26;"
+      oninput="calcRate()" value="4.65"/>
+    <div style="font-size:12px;color:#8c7b6e;">JPY</div>
+  </div>
+  <div style="margin-bottom:10px;">
+    <label style="font-size:11px;color:#8c7b6e;margin-bottom:4px;display:block;">輸入日幣（可用算式，如 500+200*3）</label>
+    <input id="jpy-input" type="text" placeholder="1000"
+      style="width:100%;border:1.5px solid #e0d0c0;border-radius:10px;padding:8px 12px;background:#fdf8f2;color:#3a2e26;"
+      oninput="calcRate()"/>
+  </div>
+  <div style="background:#f5ede3;border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;">
+    <div>
+      <div style="font-size:10px;color:#b5a89a;margin-bottom:2px;">日幣合計</div>
+      <div style="font-size:18px;font-weight:700;color:#3a2e26;" id="jpy-result">¥ 0</div>
+    </div>
+    <div style="color:#c8a87a;font-size:18px;">→</div>
+    <div style="text-align:right;">
+      <div style="font-size:10px;color:#b5a89a;margin-bottom:2px;">台幣合計</div>
+      <div style="font-size:18px;font-weight:700;color:#c8a87a;" id="twd-result">NT$ 0</div>
+    </div>
+  </div>
+</div>
+
+<!-- 記帳 -->
+<div class="section-label">📝 新增消費</div>
+<div class="card" style="margin-bottom:18px;">
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    <input id="entry-name" type="text" placeholder="品項名稱（如：午餐 / 交通）"
+      style="border:1.5px solid #e0d0c0;border-radius:10px;padding:9px 12px;background:#fdf8f2;"/>
+    <div style="display:flex;gap:8px;">
+      <input id="entry-jpy" type="number" placeholder="日幣金額"
+        style="flex:1;border:1.5px solid #e0d0c0;border-radius:10px;padding:9px 12px;background:#fdf8f2;"
+        oninput="previewTwd()"/>
+      <div style="background:#f5ede3;border-radius:10px;padding:9px 12px;font-size:13px;color:#8c7b6e;white-space:nowrap;" id="entry-twd-preview">NT$ 0</div>
+    </div>
+    <input id="entry-note" type="text" placeholder="備註（可選）"
+      style="border:1.5px solid #e0d0c0;border-radius:10px;padding:9px 12px;background:#fdf8f2;"/>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <label style="font-size:12px;color:#8c7b6e;cursor:pointer;">
+        <i class="fa-solid fa-camera" style="color:#c8a87a;margin-right:4px;"></i>上傳收據
+        <input id="receipt-input" type="file" accept="image/*" style="display:none;" onchange="handleReceipt(this)"/>
+      </label>
+      <img id="receipt-preview" style="width:44px;height:44px;border-radius:10px;object-fit:cover;display:none;" alt="receipt"/>
+    </div>
+    <button class="btn-primary" onclick="addEntry()" style="width:100%;justify-content:center;">
+      <i class="fa-solid fa-plus"></i> 新增消費
+    </button>
+  </div>
+</div>
+
+<!-- 消費統計 -->
+<div style="display:flex;gap:10px;margin-bottom:18px;">
+  <div class="card" style="flex:1;margin:0;text-align:center;">
+    <div style="font-size:10px;color:#b5a89a;margin-bottom:4px;">總日幣</div>
+    <div style="font-size:20px;font-weight:700;color:#3a2e26;" id="total-jpy">¥ 0</div>
+  </div>
+  <div class="card" style="flex:1;margin:0;text-align:center;">
+    <div style="font-size:10px;color:#b5a89a;margin-bottom:4px;">總台幣</div>
+    <div style="font-size:20px;font-weight:700;color:#c8a87a;" id="total-twd">NT$ 0</div>
+  </div>
+</div>
+
+<!-- 匯出 -->
+<div style="display:flex;gap:8px;margin-bottom:18px;">
+  <button class="btn-ghost" onclick="exportCSV()" style="flex:1;justify-content:center;">
+    <i class="fa-solid fa-file-csv"></i> 匯出 CSV
+  </button>
+  <button class="btn-ghost" onclick="clearAllEntries()" style="color:#c05030;">
+    <i class="fa-solid fa-trash"></i>
+  </button>
+</div>
+
+<!-- 消費清單 -->
+<div class="section-label">🧾 消費記錄</div>
+<div id="wallet-list">
+  <!-- 由 JS renderWallet() 填入 -->
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ============================================================
+     PAGE: LISTS
+============================================================ -->
+
+<div id="page-lists" class="page">
+  <div style="padding:20px 16px 0;">
+    <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#3a2e26;margin-bottom:20px;">清單 & 備忘</div>
+
+```
+<!-- Tabs -->
+<div style="display:flex;gap:0;border-radius:14px;overflow:hidden;border:1.5px solid #e0d0c0;margin-bottom:20px;">
+  <button id="list-tab-check" class="list-tab-btn" style="flex:1;padding:9px 0;font-size:12px;font-weight:700;background:#c8a87a;color:#fff;border:none;cursor:pointer;" onclick="switchListTab('check')">行前清單</button>
+  <button id="list-tab-memo" class="list-tab-btn" style="flex:1;padding:9px 0;font-size:12px;font-weight:700;background:#fff;color:#8c7b6e;border:none;cursor:pointer;" onclick="switchListTab('memo')">備忘錄</button>
+  <button id="list-tab-souvenir" class="list-tab-btn" style="flex:1;padding:9px 0;font-size:12px;font-weight:700;background:#fff;color:#8c7b6e;border:none;cursor:pointer;" onclick="switchListTab('souvenir')">伴手禮</button>
+</div>
+
+<!-- 行前清單 -->
+<div id="list-section-check">
+  <div id="checklist-container"><!-- 由 JS renderChecklist() 填入 --></div>
+  <div style="display:flex;gap:8px;margin-top:12px;">
+    <input id="new-check-input" type="text" placeholder="新增待辦…"
+      style="flex:1;border:1.5px solid #e0d0c0;border-radius:10px;padding:9px 12px;background:#fdf8f2;"
+      onkeydown="if(event.key==='Enter')addCheckItem()"/>
+    <button class="btn-primary" onclick="addCheckItem()"><i class="fa-solid fa-plus"></i></button>
+  </div>
+</div>
+
+<!-- 備忘錄 -->
+<div id="list-section-memo" style="display:none;">
+  <textarea id="memo-textarea" placeholder="個人備忘錄，輸入後自動儲存…&#10;（網址會自動變成連結）"
+    style="width:100%;min-height:180px;border:1.5px solid #e0d0c0;border-radius:14px;padding:14px;background:#fdf8f2;resize:none;line-height:1.7;"
+    oninput="saveMemo()"></textarea>
+  <div id="memo-preview" style="margin-top:14px;font-size:13px;line-height:1.8;color:#5c4a3a;"></div>
+</div>
+
+<!-- 伴手禮清單 -->
+<div id="list-section-souvenir" style="display:none;">
+  <div id="souvenir-container"><!-- 由 JS renderSouvenir() 填入 --></div>
+  <div style="display:flex;gap:8px;margin-top:12px;">
+    <input id="new-souvenir-input" type="text" placeholder="新增伴手禮 / 想買品牌…"
+      style="flex:1;border:1.5px solid #e0d0c0;border-radius:10px;padding:9px 12px;background:#fdf8f2;"
+      onkeydown="if(event.key==='Enter')addSouvenirItem()"/>
+    <button class="btn-primary" onclick="addSouvenirItem()"><i class="fa-solid fa-plus"></i></button>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ============================================================
+     PAGE: INFO
+============================================================ -->
+
+<div id="page-info" class="page">
+  <div style="padding:20px 16px 0;">
+    <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#3a2e26;margin-bottom:4px;">旅遊資訊</div>
+    <div style="font-size:12px;color:#b5a89a;margin-bottom:20px;">住宿 · 集合 · 交通 · 緊急聯絡</div>
+
+```
+<!-- 重要集合：高亮區 -->
+<div class="section-label">⚡ 重要集合資訊</div>
+
+<!-- 4/20 -->
+<div class="alert-card-big" style="background:linear-gradient(135deg,#f5d9c8,#e8b4b8);margin-bottom:12px;">
+  <div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#7a2a20;text-transform:uppercase;margin-bottom:6px;">🗓 4/20（三）馬籠宿一日遊</div>
+  <div style="font-weight:700;font-size:15px;color:#3a1000;margin-bottom:8px;">KKday 集合點</div>
+  <div style="font-size:13px;color:#5a2a20;margin-bottom:10px;line-height:1.7;">
+    📍 Mini Stop 名駅西店門前<br/>
+    愛知県名古屋市中村区椿町 5-10 CORE meiekiビル 1F<br/>
+    （靠近 Big Camera 後方，VIA INN 步行可達）
+  </div>
+  <a href="https://maps.google.com/?q=Mini+Stop+名駅西店+名古屋" target="_blank"
+    style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.4);color:#3a1000;font-size:12px;font-weight:700;padding:6px 14px;border-radius:99px;text-decoration:none;">
+    <i class="fa-solid fa-location-dot"></i> Google Maps
+  </a>
+</div>
+
+<!-- 4/21 -->
+<div class="alert-card-big" style="background:linear-gradient(135deg,#c8dde8,#e8c4a0);margin-bottom:20px;">
+  <div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#1a3a5a;text-transform:uppercase;margin-bottom:6px;">🗓 4/21（四）立山黑部 3 日團</div>
+  <div style="font-weight:700;font-size:15px;color:#0a2030;margin-bottom:8px;">⏰ 07:20 集合 ／ 07:30 出發</div>
+  <div style="font-size:13px;color:#1a3a5a;margin-bottom:10px;line-height:1.7;">
+    📍 JR 名古屋站 太閤通口 站前廣場<br/>
+    <span style="font-weight:700;color:#c05030;">⚠️ 請提前 10 分鐘到達，不要遲到！</span>
+  </div>
+  <a href="https://maps.google.com/?q=JR名古屋駅太閤通口" target="_blank"
+    style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.4);color:#0a2030;font-size:12px;font-weight:700;padding:6px 14px;border-radius:99px;text-decoration:none;">
+    <i class="fa-solid fa-location-dot"></i> Google Maps
+  </a>
+</div>
+
+<!-- 住宿資訊 -->
+<div class="info-section">
+  <h3><i class="fa-solid fa-hotel" style="color:#c8a87a;"></i> 住宿總表</h3>
+
+  <!-- 換房提醒卡 -->
+  <div style="background:linear-gradient(135deg,#fde8b0,#f5c870);border-radius:16px;padding:14px;margin-bottom:12px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:#7a5000;text-transform:uppercase;margin-bottom:4px;">⚠️ 換房提醒</div>
+    <div style="font-weight:700;font-size:14px;color:#3a2000;margin-bottom:4px;">4/20 晚上回飯店後要換房！</div>
+    <div style="font-size:12px;color:#5a3800;line-height:1.7;">
+      同一棟 VIA INN 椿町<br/>
+      豪華大床房（CCP563999）→ 小型雙人房（NHU592065）<br/>
+      一日遊回來後到 Front Desk 辦理換房手續
+    </div>
+  </div>
+
+  <!-- 4 段住宿 -->
+  <div class="card" style="margin-bottom:10px;">
+    <div style="font-size:10px;color:#c8a87a;font-weight:700;margin-bottom:4px;">4/18–4/20 · 2 晚</div>
+    <div style="font-weight:700;font-size:14px;margin-bottom:2px;">VIA INN 椿町・豪華大床房</div>
+    <div style="font-size:11px;color:#c8a87a;font-weight:600;margin-bottom:6px;">訂單：CCP563999</div>
+    <div style="font-size:12px;color:#8c7b6e;line-height:1.8;">
+      📍 9-13 Tsubaki-cho, Nakamura<br/>
+      📞 <a href="tel:+81524515489" style="color:#c8a87a;">+81-52-4515489</a><br/>
+      🚉 太閤通口步行即達，馬籠宿集合點超近
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:10px;border:1.5px solid #f5d878;">
+    <div style="font-size:10px;color:#c8a87a;font-weight:700;margin-bottom:4px;">4/20–4/21 · 1 晚 ⚠️ 換房</div>
+    <div style="font-weight:700;font-size:14px;margin-bottom:2px;">VIA INN 椿町・小型雙人房</div>
+    <div style="font-size:11px;color:#c8a87a;font-weight:600;margin-bottom:6px;">訂單：NHU592065</div>
+    <div style="font-size:12px;color:#8c7b6e;line-height:1.8;">
+      📍 同一棟，回飯店後到櫃台換房<br/>
+      📞 <a href="tel:+81524515489" style="color:#c8a87a;">+81-52-4515489</a>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:10px;">
+    <div style="font-size:10px;color:#c8a87a;font-weight:700;margin-bottom:4px;">4/21 · 第 1 晚</div>
+    <div style="font-weight:700;font-size:14px;margin-bottom:2px;">長野松代美居溫泉度假酒店</div>
+    <div style="font-size:10px;color:#8c7b6e;margin-bottom:4px;">メルキュール長野松代リゾート＆スパ</div>
+    <div style="font-size:11px;color:#c8a87a;font-weight:600;margin-bottom:6px;">訂單：26KK243870236</div>
+    <div style="font-size:12px;color:#8c7b6e;line-height:1.8;">
+      📍 長野県長野市松代町西寺尾1372番地1<br/>
+      ♨️ 含餐・溫泉度假酒店・好好泡個湯
+    </div>
+    <a href="https://maps.google.com/?q=メルキュール長野松代リゾート+スパ" target="_blank"
+      style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;background:#f5ede3;color:#5c4a3a;font-size:11px;font-weight:700;padding:5px 12px;border-radius:99px;text-decoration:none;">
+      <i class="fa-solid fa-location-dot" style="color:#c8a87a;"></i> Google Maps
+    </a>
+  </div>
+
+  <div class="card" style="margin-bottom:10px;">
+    <div style="font-size:10px;color:#c8a87a;font-weight:700;margin-bottom:4px;">4/22 · 第 2 晚</div>
+    <div style="font-weight:700;font-size:14px;margin-bottom:2px;">MYSTAYS 金澤精品酒店</div>
+    <div style="font-size:10px;color:#8c7b6e;margin-bottom:4px;">ホテルマイステイズプレミア金沢</div>
+    <div style="font-size:11px;color:#c8a87a;font-weight:600;margin-bottom:6px;">訂單：26KK243870236</div>
+    <div style="font-size:12px;color:#8c7b6e;line-height:1.8;">
+      📍 石川県金沢市広岡2-13-5<br/>
+      🏙️ 含餐・金澤市區・精品設計酒店
+    </div>
+    <a href="https://maps.google.com/?q=ホテルマイステイズプレミア金沢" target="_blank"
+      style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;background:#f5ede3;color:#5c4a3a;font-size:11px;font-weight:700;padding:5px 12px;border-radius:99px;text-decoration:none;">
+      <i class="fa-solid fa-location-dot" style="color:#c8a87a;"></i> Google Maps
+    </a>
+  </div>
+
+  <div class="card">
+    <div style="font-size:10px;color:#c8a87a;font-weight:700;margin-bottom:4px;">4/23–4/25 · 2 晚</div>
+    <div style="font-weight:700;font-size:14px;margin-bottom:2px;">竹亭高級名站南</div>
+    <div style="font-size:11px;color:#c8a87a;font-weight:600;margin-bottom:6px;">訂單：KKC652959</div>
+    <div style="font-size:12px;color:#8c7b6e;line-height:1.8;">
+      📍 1 Chome-23-9 Meiekiminami<br/>
+      📞 <a href="tel:+81525621211" style="color:#c8a87a;">+81-5-25621211</a><br/>
+      🍳 含早餐・Check-in 15:00・回機場超順
+    </div>
+  </div>
+</div>
+
+<!-- 交通提醒 -->
+<div class="info-section">
+  <h3><i class="fa-solid fa-train" style="color:#c8a87a;"></i> 交通重點提醒</h3>
+  <div class="card">
+    <div style="font-size:13px;line-height:1.9;color:#5c4a3a;">
+      <div style="margin-bottom:8px;"><span style="font-weight:700;">✈️ 回機場 (4/25)：名鐵中部國際機場線</span></div>
+      <div>🚆 <b>普通車</b>：便宜、時間稍長（約 35–40 分）</div>
+      <div>🚄 <b>μ-SKY（特急）</b>：舒適、附行李空間、適合大行李（加收特急費）</div>
+      <div style="margin-top:8px;font-size:12px;color:#8c7b6e;">建議搭 μ-SKY，有行李放置空間，親子出行輕鬆很多</div>
+      <div style="margin-top:8px;"><span style="font-weight:700;">🚇 市區移動：</span>名古屋市地鐵 + 名鐵為主</div>
+      <div style="font-size:12px;color:#8c7b6e;margin-top:4px;">Manaca / ICOCA / 交通系 IC 卡通用，可直接刷卡</div>
+    </div>
+  </div>
+</div>
+
+<!-- 重要憑證 -->
+<div class="info-section">
+  <h3><i class="fa-solid fa-passport" style="color:#c8a87a;"></i> 重要憑證照片</h3>
+  <div style="font-size:12px;color:#b5a89a;margin-bottom:8px;">截圖存進來，點照片放大查看</div>
+  <!-- Visit Japan Web 提醒 -->
+  <div style="background:linear-gradient(135deg,#dce8f8,#c8dde8);border-radius:14px;padding:12px;margin-bottom:12px;">
+    <div style="font-size:11px;font-weight:700;color:#1a3a5a;margin-bottom:4px;">🛂 Visit Japan Web · 全員已登錄 ✅</div>
+    <div style="font-size:12px;color:#2a4a6a;line-height:1.7;">
+      LIN PEI CHEN · WU CHENG LUNG · WU YUE TUNG<br/>
+      入境時出示各自的 QR Code 給海關掃描<br/>
+      <span style="font-weight:700;">⚠️ 記得截圖存到下方憑證格！</span>
+    </div>
+  </div>
+  <div id="voucher-grid" style="display:flex;flex-direction:column;gap:10px;">
+    <!-- 由 JS renderVouchers() 填入 -->
+  </div>
+</div>
+
+<!-- 機場接送 -->
+<div class="info-section">
+  <h3><i class="fa-solid fa-car" style="color:#c8a87a;"></i> 機場接送（肯驛 CanLead）</h3>
+
+  <!-- 去程 -->
+  <div class="card" style="margin-bottom:10px;border-left:4px solid #c8a87a;">
+    <div style="font-size:10px;color:#c8a87a;font-weight:700;margin-bottom:4px;">4/18（六）去程 出發</div>
+    <div style="font-weight:700;font-size:15px;margin-bottom:6px;">🚗 05:00 司機來接</div>
+    <div style="font-size:12px;color:#5c4a3a;line-height:1.9;">
+      📋 預約編號：<b>F15136926</b><br/>
+      🏠 接送地址：台中市西屯區天水西五街5號<br/>
+      ✈️ 航班：IT206 · 09:00 起飛<br/>
+      👨 司機：黃日重<br/>
+      🚙 車牌：RBV-6915<br/>
+      📞 <a href="tel:0988922705" style="color:#c8a87a;font-weight:700;">0988-922705</a><br/>
+      🎫 驗證碼：<b>6654</b><br/>
+      💰 總金額：NT$2,120<br/>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+      <a href="https://68666.tw/27XE" target="_blank"
+        style="display:inline-flex;align-items:center;gap:5px;background:#c8a87a;color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:99px;text-decoration:none;">
+        <i class="fa-solid fa-link"></i> 票券連結
+      </a>
+      <a href="tel:0988922705"
+        style="display:inline-flex;align-items:center;gap:5px;background:#f5ede3;color:#5c4a3a;font-size:12px;font-weight:700;padding:7px 14px;border-radius:99px;text-decoration:none;">
+        <i class="fa-solid fa-phone" style="color:#c8a87a;"></i> 打給司機
+      </a>
+    </div>
+  </div>
+
+  <!-- 回程 -->
+  <div class="card" style="border-left:4px solid #c4d4c0;">
+    <div style="font-size:10px;color:#c8a87a;font-weight:700;margin-bottom:4px;">4/25（六）回程 接機</div>
+    <div style="font-weight:700;font-size:15px;margin-bottom:6px;">🚗 15:50 抵達後接機</div>
+    <div style="font-size:12px;color:#5c4a3a;line-height:1.9;">
+      📋 預約編號：<b>F15136951</b><br/>
+      🏠 送回地址：台中市西屯區天水西五街5號<br/>
+      ✈️ 航班：IT207 · 15:50 抵達<br/>
+      👨 司機資訊：抵台前會收到通知<br/>
+      💰 總金額：NT$1,920<br/>
+      📞 客服：<a href="tel:0422062505" style="color:#c8a87a;font-weight:700;">04-2206-2505</a>
+    </div>
+  </div>
+</div>
+
+<!-- 桃園機場貴賓室提醒 -->
+<div class="info-section">
+  <h3><i class="fa-solid fa-utensils" style="color:#c8a87a;"></i> 桃園機場出發前 · 貴賓室</h3>
+  <div class="card" style="background:linear-gradient(135deg,#f8f4ec,#fff);">
+    <div style="font-size:10px;font-weight:700;color:#c8a87a;letter-spacing:.08em;margin-bottom:8px;">✅ 強烈推薦：Homee Kitchen 好饗廚房</div>
+    <div style="font-size:13px;color:#5c4a3a;line-height:1.8;margin-bottom:10px;">
+      ⚠️ T1 環亞貴賓室 D 區 2026/4/30 前裝修中，座位少且常爆滿<br/>
+      🍜 <b>Homee Kitchen</b> 現點現做更划算，可外帶上飛機<br/>
+      📍 T1 出境後 3F B廳，靠近 B5 登機口<br/>
+      🕕 <b>營業時間：06:00–20:00</b><br/>
+      💳 出示 U.First QR Code + 登機證兌換套餐
+    </div>
+    <div style="background:#f5ede3;border-radius:12px;padding:10px;font-size:12px;color:#8c7b6e;line-height:1.7;">
+      🃏 U.First 卡號：6886-2629-4712-2603（PEI-CHEN LIN）<br/>
+      ⚠️ 帶同伴用餐會扣次數，三人共 3 次，<b>出發前確認剩餘次數！</b>
+    </div>
+  </div>
+</div>
+<div class="info-section">
+  <h3><i class="fa-solid fa-phone-volume" style="color:#c8a87a;"></i> 緊急聯絡</h3>
+  <div class="card">
+    <div style="font-size:13px;line-height:2;color:#5c4a3a;">
+      <div class="info-row"><span class="info-label">日本警察</span><span style="font-weight:700;">110</span></div>
+      <div class="info-row"><span class="info-label">消防/救護</span><span style="font-weight:700;">119</span></div>
+      <div class="info-row"><span class="info-label">外交部海外急難</span><span style="font-weight:700;">+886-800-085-095</span></div>
+      <div class="info-row"><span class="info-label">台灣駐大阪辦事處</span><span>+81-6-6443-8481</span></div>
+      <div class="info-row"><span class="info-label">信用卡掛失</span><span>記下各卡背面電話</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 旅遊注意事項 -->
+<div class="info-section">
+  <h3><i class="fa-solid fa-circle-exclamation" style="color:#c8a87a;"></i> 日本旅遊注意事項</h3>
+  <div class="card">
+    <div style="font-size:13px;line-height:1.9;color:#5c4a3a;">
+      🚶 手扶梯靠左站（名古屋習慣靠左）<br/>
+      🚭 只能在指定區域抽菸<br/>
+      🚮 街上幾乎沒垃圾桶，垃圾自己帶走<br/>
+      📵 電話保持靜音，捷運內不通話<br/>
+      💴 很多小店只收現金，帶足日幣<br/>
+      🏥 有健保不適用，建議買旅遊保險<br/>
+      👶 嬰兒車大部分設施可使用，地鐵有升降機
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="info-section">
+  <h3><i class="fa-solid fa-circle-question" style="color:#c8a87a;"></i> FAQ</h3>
+  <div id="faq-container">
+    <!-- 由 JS renderFAQ() 填入 -->
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ============================================================
+     JS: DATA & LOGIC
+============================================================ -->
+
+<script>
+/* ============================================================
+   ★ 旅行資料區 — 以下是主要資料，要修改旅行資訊請改這裡 ★
+============================================================ */
+
+/* ★ 基本旅行資訊 ★ */
+const tripInfo = {
+  title: 'Nagoya Family Trip',
+  titleZh: '名古屋親子之旅',
+  dates: '2026/04/18 – 2026/04/25',
+  days: 8,
+  members: '2大1小（4歲小孩）',
+  flightOut: 'IT206',
+  flightBack: 'IT207',
+};
+
+/* ★ 住宿資訊（更新版）★ */
+const stays = [
+  {
+    name: 'VIA INN 椿町・豪華大床房',
+    address: '9-13 Tsubaki-cho, Nakamura, Nagoya',
+    dates: '4/18–4/20（2晚）',
+    code: 'CCP563999',
+    phone: '+81-52-4515489',
+    note: '靠近太閤通口，馬籠宿集合點步行即達',
+    mapsUrl: 'https://maps.google.com/?q=VIA+INN+名古屋椿町',
+  },
+  {
+    name: 'VIA INN 椿町・小型雙人房 ⚠️換房',
+    address: '9-13 Tsubaki-cho, Nakamura, Nagoya',
+    dates: '4/20–4/21（1晚）',
+    code: 'NHU592065',
+    phone: '+81-52-4515489',
+    note: '⚠️ 4/20 一日遊回來後辦換房手續！同一棟換到小型雙人房',
+    mapsUrl: 'https://maps.google.com/?q=VIA+INN+名古屋椿町',
+  },
+  {
+    name: '長野松代美居溫泉度假酒店',
+    nameJp: 'メルキュール長野松代リゾート＆スパ',
+    address: '〒381-1215 長野県長野市松代町西寺尾1372番地1',
+    dates: '4/21（2晚中第1晚）',
+    code: '26KK243870236',
+    phone: '',
+    note: '立山黑部行程附住宿 · 含餐 · 溫泉度假酒店',
+    mapsUrl: 'https://maps.google.com/?q=メルキュール長野松代リゾート+スパ',
+  },
+  {
+    name: 'MYSTAYS 金澤精品酒店',
+    nameJp: 'ホテルマイステイズプレミア金沢',
+    address: '〒920-0031 石川県金沢市広岡2-13-5',
+    dates: '4/22（2晚中第2晚）',
+    code: '26KK243870236',
+    phone: '',
+    note: '立山黑部行程附住宿 · 含餐 · 金澤市區',
+    mapsUrl: 'https://maps.google.com/?q=ホテルマイステイズプレミア金沢',
+  },
+  {
+    name: '竹亭高級名站南',
+    address: '1 Chome-23-9 Meiekiminami, Nakamura',
+    dates: '4/23–4/25（2晚）',
+    code: 'KKC652959',
+    phone: '+81-5-25621211',
+    note: '含早餐・Check-in 15:00・回機場超順',
+    mapsUrl: 'https://maps.google.com/?q=Kuretake+Inn+Premium+Meiekiminami',
+  },
+];
+
+/* ★ 每日行程資料（從截圖更新完整版）★
+   之後要修改行程請改這個 itinerary 陣列
+*/
+const itinerary = [
+  {
+    day: 1, date: '4/18（六）', title: '抵達名古屋 · 輕鬆入城',
+    emoji: '✈️',
+    color: '#f5d9c8',
+    alert: null,
+    items: [
+      { time: '05:00', text: '🚗 肯驛司機來接！黃日重・RBV-6915・0988-922705（驗證碼 6654）', tags: ['must'] },
+      { time: '09:00', text: '台灣桃園機場出發・IT206・Terminal 1・訂位碼 K9B4YG', tags: ['must'] },
+      { time: '　　　', text: '座位：林佩瑨 24A・吳承龍 24C・吳玥彤 24B', tags: [] },
+      { time: '12:55', text: '抵達名古屋中部國際機場（NGO・Terminal 2）', tags: [] },
+      { time: '　　　', text: '⚠️ 入境前請完成 Visit Japan Web 申報！', tags: [] },
+      { time: '14:00', text: '搭 μSky 特急 → 名古屋站（約 28 分・¥870/人・可用 Suica）', tags: ['must'] },
+      { time: '15:00', text: 'VIA INN 椿町 Check-in（豪華大床房・CCP563999）', tags: [] },
+      { time: '下午', text: '名古屋城（¥500/成人・9:00–16:30・週二休）', tags: ['must'] },
+      { time: '12:00', text: '午餐：大須商店街周邊・步行商店街小吃掃街', tags: ['easy'] },
+      { time: '14:00', text: '熱田神宮（免費入場・全年開放・日本三大神宮之一）', tags: ['must'] },
+      { time: '16:30', text: '榮・松坂屋逛街（百貨公司+地下街・退稅攻略）', tags: ['skip'] },
+      { time: '18:30', text: '晚餐：鰻魚飯 蓬萊軒（名古屋必吃ひつまぶし・建議提早排隊）', tags: ['must'] },
+    ],
+    stay: 'VIA INN 椿町・豪華大床房（CCP563999）',
+  },
+  {
+    day: 2, date: '4/19（日）', title: '名古屋港水族館 · 海洋世界',
+    emoji: '🐳',
+    color: '#c8dde8',
+    alert: null,
+    items: [
+      { time: '早上', text: '搭地鐵名港線到名古屋港站，步行到水族館', tags: [] },
+      { time: '上午', text: '名古屋港水族館（虎鯨表演、企鵝館）', tags: ['must', 'family'] },
+      { time: '下午', text: '富士號（港口展示船）— 可視體力', tags: ['skip'] },
+      { time: '下午', text: '海洋火車樂園（小孩喜歡可去）', tags: ['skip', 'family'] },
+      { time: '傍晚', text: '市區回飯店，若精力充沛可去 Sky Promenade 看夜景', tags: ['skip'] },
+    ],
+    stay: 'VIA INN 椿町・豪華大床房（CCP563999）',
+  },
+  {
+    day: 3, date: '4/20（一）', title: 'KKday 馬籠宿一日遊・⚠️換房日',
+    emoji: '🏯',
+    color: '#f5d9c8',
+    alert: { type: 'danger', text: '集合：Mini Stop 名駅西店門前（椿町 5-10）· 一日遊回來後辦換房手續！' },
+    items: [
+      { time: '早上', text: '不排其他行程！直接到集合點集合', tags: ['must'] },
+      { time: '全天', text: 'KKday 馬籠宿/妻籠宿一日遊（含交通）', tags: ['must'] },
+      { time: '晚上', text: '🔑 回 VIA INN 辦換房手續 → 小型雙人房（NHU592065）', tags: ['must'] },
+      { time: '晚上', text: '輕鬆晚餐休息，明天 07:20 要早起！', tags: [] },
+    ],
+    stay: '⚠️ 換房！VIA INN 椿町・小型雙人房（NHU592065）',
+  },
+  {
+    day: 4, date: '4/21（二）', title: '立山黑部第 1 天・立山・室堂平・雪之大谷',
+    emoji: '🏔️',
+    color: '#c4d4c0',
+    alert: { type: 'urgent', text: '⏰ 07:20 集合！JR 名古屋站太閤通口站前廣場。07:30 出發，不能遲到！訂單：26KK243870236・PEI-CHEN LIN' },
+    items: [
+      { time: '07:20', text: '太閤通口集合（提前 10 分鐘到）・訂單 26KK243870236', tags: ['must'] },
+      { time: '07:30', text: '出發！3 日立山黑部團・成人 ×2・兒童 ×1', tags: ['must'] },
+      { time: '全天', text: '立山・室堂平・雪之大谷（4月限定！）', tags: ['must'] },
+    ],
+    stay: '♨️ 長野松代美居溫泉度假酒店（メルキュール長野松代）',
+  },
+  {
+    day: 5, date: '4/22（三）', title: '立山黑部第 2 天・黑部水壩・白川鄉',
+    emoji: '❄️',
+    color: '#c4d4c0',
+    alert: null,
+    items: [
+      { time: '全天', text: '黑部水壩・阿爾卑斯路線・白川鄉合掌村', tags: ['must'] },
+    ],
+    stay: '🏙️ MYSTAYS 金澤精品酒店（ホテルマイステイズプレミア金沢）',
+  },
+  {
+    day: 6, date: '4/23（四）', title: '立山黑部回名古屋・入住竹亭',
+    emoji: '🌿',
+    color: '#f5ede3',
+    alert: null,
+    items: [
+      { time: '全天', text: '立山黑部最終日，跟團返回名古屋', tags: [] },
+      { time: '15:00', text: '🏨 入住竹亭高級名站南（KKC652959・含早餐）', tags: ['must'] },
+      { time: '　　　', text: 'Check-in 15:00・電話 +81-5-25621211', tags: [] },
+      { time: '晚上', text: '輕鬆晚餐，好好休息', tags: [] },
+    ],
+    stay: '竹亭高級名站南（KKC652959）',
+  },
+  {
+    day: 7, date: '4/24（五）', title: '購物 Day・伴手禮 + 補景點',
+    emoji: '🛍️',
+    color: '#f5d9c8',
+    alert: null,
+    items: [
+      { time: '早', text: '竹亭早餐（含早）', tags: [] },
+      { time: '09:30', text: '主力伴手禮掃貨！JR 名古屋高島屋・名鐵百貨・Grand Shop Kiosk・Nagomiya', tags: ['must'] },
+      { time: '14:00', text: '名古屋市區補景點：德川園・四間道・圓頓寺商店街', tags: ['skip'] },
+      { time: '18:00', text: '最後晚餐：壽がきや or 台灣ラーメン（輕鬆選）', tags: ['easy'] },
+    ],
+    stay: '竹亭高級名站南（KKC652959）',
+  },
+  {
+    day: 8, date: '4/25（六）', title: '回家！IT207 名古屋→台灣',
+    emoji: '🏠',
+    color: '#e8c4a0',
+    alert: { type: 'danger', text: '⚠️ 最晚 11:45 前必須在機場！IT207 出發 13:45・需提前 2 小時報到' },
+    items: [
+      { time: '10:00', text: '竹亭退房（退房前可寄放行李・外出補最後採購）', tags: [] },
+      { time: '10:30', text: '名古屋站最後補買：Grand Shop Kiosk・Nagomiya・高島屋地下', tags: ['skip'] },
+      { time: '11:00', text: '🚄 搭 μSky → 中部國際機場（約 28 分・建議 11:00–11:30 班次）', tags: ['must'] },
+      { time: '11:45', text: '✅ 最晚必須到機場！辦報到 + 安檢', tags: ['must'] },
+      { time: '13:45', text: '✈️ IT207 名古屋→台灣桃園・NGO Terminal 2・座位 24A/24B/24C', tags: ['must'] },
+      { time: '15:50', text: '🏠 抵達台灣桃園機場・TPE Terminal 1・平安回家！', tags: [] },
+      { time: '抵達後', text: '🚗 肯驛接機・F15136951・確認司機通知・送回台中天水西五街', tags: ['must'] },
+    ],
+    stay: '回家囉 🏠',
+  },
+];
+
+/* ★ 餐廳資料 ★
+   之後想自行新增 / 刪除餐廳，請改這個 foodSpots 陣列
+   categories 可選：must / budget / family / bbq / sweets / ramen / katsu / eel
+*/
+const foodSpots = [
+  {
+    id: 1,
+    name: 'Kanizanmai 蟹三味',
+    type: '帝王蟹 / 雪蟹吃到飽',
+    area: '榮站附近',
+    emoji: '🦀',
+    bgColor: 'linear-gradient(135deg,#fde8d8,#f5c8a8)',
+    desc: '螃蟹吃到飽，高單價但值得犒賞自己。榮站 5 號出口約 450 公尺。',
+    dayHint: '4/24 榮逛完可安排',
+    needBook: true,
+    categories: ['bbq', 'must'],
+    family: false,
+    mapsUrl: 'https://maps.google.com/?q=Kanizanmai+名古屋',
+    website: 'https://kanizanmai.com/',
+    hot: true,
+    queue: false,
+    note: '可用 KKday 訂位',
+  },
+  {
+    id: 2,
+    name: 'Tonkatsu Miton',
+    type: '板前炸豬排',
+    area: '名古屋市區',
+    emoji: '🥩',
+    bgColor: 'linear-gradient(135deg,#fdf0d8,#e8d0a8)',
+    desc: '隱藏版板前炸豬排，主廚在吧台當面料理，品質精緻。',
+    dayHint: '4/18 或 4/19',
+    needBook: true,
+    categories: ['katsu', 'budget'],
+    family: false,
+    mapsUrl: 'https://maps.google.com/?q=Tonkatsu+Miton+名古屋',
+    website: '',
+    hot: true,
+    queue: true,
+    note: '建議先訂位',
+  },
+  {
+    id: 3,
+    name: 'Hirudake Unagiya',
+    type: '高 CP 值鰻魚飯',
+    area: '名古屋市區',
+    emoji: '🐟',
+    bgColor: 'linear-gradient(135deg,#e8f4e8,#c8e8c8)',
+    desc: '午餐限定鰻魚飯，份量足 CP 值超高，不輸名店卻不必排隊。',
+    dayHint: '任意一天午餐',
+    needBook: false,
+    categories: ['eel', 'budget'],
+    family: true,
+    mapsUrl: 'https://maps.google.com/?q=Hirudake+Unagiya+名古屋',
+    website: '',
+    hot: false,
+    queue: false,
+    note: '午餐營業，下午早點去',
+  },
+  {
+    id: 4,
+    name: 'Yakiniku Watami',
+    type: '和牛燒肉吃到飽',
+    area: '名古屋站附近',
+    emoji: '🥩',
+    bgColor: 'linear-gradient(135deg,#fde8e0,#f5c8c0)',
+    desc: '和牛燒肉吃到飽，鬧區多間分店，大人小孩都滿意。',
+    dayHint: '4/24 名站採買後',
+    needBook: false,
+    categories: ['bbq', 'family'],
+    family: true,
+    mapsUrl: 'https://maps.google.com/?q=Watami+Yakiniku+名古屋',
+    website: '',
+    hot: false,
+    queue: false,
+    note: '親子友善，位置多',
+  },
+  {
+    id: 5,
+    name: 'Menya Shishimaru',
+    type: '濃厚雞白湯拉麵',
+    area: '名古屋市區',
+    emoji: '🍜',
+    bgColor: 'linear-gradient(135deg,#fff0e0,#f5d8b0)',
+    desc: '人氣拉麵店，濃厚雞白湯底，配料豐富，排隊也值得。',
+    dayHint: '4/18 或 4/19 午餐',
+    needBook: false,
+    categories: ['ramen', 'must'],
+    family: true,
+    mapsUrl: 'https://maps.google.com/?q=Menya+Shishimaru+名古屋',
+    website: '',
+    hot: true,
+    queue: true,
+    note: '熱門店，午餐尖峰需等',
+  },
+  {
+    id: 6,
+    name: 'Katuretu MATUMURA',
+    type: '高質感炸豬排',
+    area: '名古屋市區',
+    emoji: '🍱',
+    bgColor: 'linear-gradient(135deg,#fdf0d8,#e8d0a8)',
+    desc: '質感炸豬排名店，麵包粉細緻、口感酥脆，適合正餐。',
+    dayHint: '4/24',
+    needBook: true,
+    categories: ['katsu'],
+    family: false,
+    mapsUrl: 'https://maps.google.com/?q=Katsuretsu+Matumura+名古屋',
+    website: '',
+    hot: true,
+    queue: false,
+    note: '建議訂位',
+  },
+  {
+    id: 7,
+    name: 'Tsubame Bread & Milk',
+    type: '吐司 / 早餐 / 下午茶',
+    area: '名古屋市區',
+    emoji: '🍞',
+    bgColor: 'linear-gradient(135deg,#f8f0e0,#f0d8c0)',
+    desc: '溫柔風格吐司早餐咖啡廳，吐司超厚、牛奶超濃，親子友善輕食。',
+    dayHint: '4/18 或 4/24 下午茶',
+    needBook: false,
+    categories: ['sweets', 'family'],
+    family: true,
+    mapsUrl: 'https://maps.google.com/?q=Tsubame+Bread+Milk+名古屋',
+    website: '',
+    hot: true,
+    queue: true,
+    note: '親子友善',
+  },
+  {
+    id: 8,
+    name: '蓬萊軒',
+    type: '鰻魚飯三吃（ひつまぶし）',
+    area: '熱田神宮附近',
+    emoji: '🐟',
+    bgColor: 'linear-gradient(135deg,#e8f4e0,#c8e4c0)',
+    desc: '名古屋最具代表的鰻魚飯三吃始祖店，熱田神宮旁，一定要來一次！',
+    dayHint: '4/18 熱田神宮日',
+    needBook: true,
+    categories: ['eel', 'must'],
+    family: false,
+    mapsUrl: 'https://maps.google.com/?q=蓬萊軒+熱田',
+    website: 'https://www.houraiken.com/',
+    hot: true,
+    queue: true,
+    note: '排隊名店，建議早到',
+  },
+  {
+    id: 9,
+    name: '矢場とん',
+    type: '味噌豬排',
+    area: '矢場町站',
+    emoji: '🥓',
+    bgColor: 'linear-gradient(135deg,#fde8e0,#e8c0a0)',
+    desc: '名古屋代表性味噌豬排名店，又甜又鹹的特製味噌醬，必吃名古屋特色！',
+    dayHint: '4/24 榮區',
+    needBook: false,
+    categories: ['katsu', 'must'],
+    family: true,
+    mapsUrl: 'https://maps.google.com/?q=矢場とん+名古屋',
+    website: 'https://www.yabaton.com/',
+    hot: true,
+    queue: true,
+    note: '假日要排隊',
+  },
+  {
+    id: 10,
+    name: '世界的山將',
+    type: '手羽先（名古屋炸雞翅）',
+    area: '大須 / 榮',
+    emoji: '🍗',
+    bgColor: 'linear-gradient(135deg,#fff0d8,#f5d898)',
+    desc: '名古屋手羽先代表！甜辣口味酥脆，邊走邊吃超方便。',
+    dayHint: '大須散步時順路',
+    needBook: false,
+    categories: ['must', 'family'],
+    family: true,
+    mapsUrl: 'https://maps.google.com/?q=世界的山将+名古屋',
+    website: '',
+    hot: false,
+    queue: false,
+    note: '可外帶邊走邊吃',
+  },
+  {
+    id: 11,
+    name: 'Komeda Coffee',
+    type: '早餐 Morning Set',
+    area: '全名古屋多間',
+    emoji: '☕',
+    bgColor: 'linear-gradient(135deg,#e8d8c0,#f5e8d0)',
+    desc: '名古屋 Morning 文化精髓！點咖啡附送土司+蛋，早餐保底必去。',
+    dayHint: '任意早晨',
+    needBook: false,
+    categories: ['sweets', 'family'],
+    family: true,
+    mapsUrl: 'https://maps.google.com/?q=Komeda+Coffee+名古屋',
+    website: 'https://www.komeda.co.jp/',
+    hot: false,
+    queue: false,
+    note: '點咖啡送早餐（僅上午）',
+  },
+  {
+    id: 12,
+    name: '地雷也（Jiraiya）天むす',
+    type: '天ぷら飯糰',
+    area: '名古屋站周邊',
+    emoji: '🍙',
+    bgColor: 'linear-gradient(135deg,#f5f0e0,#e8e0c8)',
+    desc: '名古屋名物天むす，蝦天婦羅飯糰，移動中完美輕食補給。',
+    dayHint: '出發前或移動中',
+    needBook: false,
+    categories: ['must', 'family'],
+    family: true,
+    mapsUrl: 'https://maps.google.com/?q=地雷也+天むす+名古屋',
+    website: '',
+    hot: false,
+    queue: false,
+    note: '可外帶，方便補給',
+  },
+];
+
+/* ★ 行前清單預設項目 ★ */
+const defaultChecklist = [
+  { id: 1, text: '護照（有效期6個月以上）', done: false, category: '證件' },
+  { id: 2, text: '機票電子憑證', done: false, category: '證件' },
+  { id: 3, text: 'KKday 憑證 × 2（馬籠宿 / 立山黑部）', done: false, category: '證件' },
+  { id: 4, text: '住宿確認信（VIA INN + 竹亭）', done: false, category: '證件' },
+  { id: 5, text: '日幣現金', done: false, category: '金錢' },
+  { id: 6, text: '信用卡（海外刷卡手續費確認）', done: false, category: '金錢' },
+  { id: 7, text: '交通系 IC 卡 or Manaca', done: false, category: '交通' },
+  { id: 8, text: '行動電源（符合航空規定）', done: false, category: '3C' },
+  { id: 9, text: '旅遊保險', done: false, category: '保險' },
+  { id: 10, text: '薄外套（名古屋 4 月早晚涼）', done: false, category: '衣物' },
+  { id: 11, text: '雨傘 / 雨衣', done: false, category: '衣物' },
+  { id: 12, text: '小孩備用衣物（多帶 2–3 套）', done: false, category: '孩子' },
+  { id: 13, text: '小孩常備藥（發燒、腸胃、過敏）', done: false, category: '孩子' },
+  { id: 14, text: '防曬乳 + 濕紙巾', done: false, category: '日用' },
+  { id: 15, text: '行李箱標籤 / 吊牌', done: false, category: '行李' },
+];
+
+/* ★ 伴手禮清單預設 ★ */
+const defaultSouvenir = [
+  { id: 1, text: '赤福餅', done: false },
+  { id: 2, text: '矢場とん醬料', done: false },
+  { id: 3, text: '名古屋手信 / えびせんべい', done: false },
+  { id: 4, text: 'Komeda Coffee 商品', done: false },
+  { id: 5, text: '高島屋 / Loft 雜貨', done: false },
+];
+
+/* ★ FAQ 資料 ★ */
+const faqData = [
+  { q: '名古屋市內交通怎麼搭？', a: '市地鐵（東山線/名城線）+ 名鐵最方便。建議用交通系 IC 卡（Manaca 或 Suica 都可以），不需要每次買票。' },
+  { q: '去機場要多早出發？', a: '建議在起飛前 2.5 小時到機場。名鐵 μ-SKY 特急約 28 分鐘，普通車約 35–40 分鐘，記得預留等車時間。大行李推薦 μ-SKY，有行李放置空間。' },
+  { q: '4 歲小孩去名古屋港水族館合適嗎？', a: '非常適合！有虎鯨表演（需確認時間）、企鵝館、海豚館，小孩通常很興奮。建議開門就進去，避開週末人潮。' },
+  { q: '4/20 集合點離飯店多遠？', a: 'Mini Stop 名駅西店離 VIA INN 椿町只要步行 3–5 分鐘，非常方便，是選這間飯店的重要原因之一。' },
+  { q: '立山黑部回來後行程如何安排？', a: '4/23 回名古屋後以休息為主，入住竹亭高級名站南，整理行李、輕鬆晚餐。隔天 4/24 才安排東山動植物園 + 榮 + 名站採買，不要塞太多。' },
+];
+
+/* =====================================================
+   ★ localStorage 工具函數
+===================================================== */
+function lsGet(key, fallback) {
+  try {
+    const v = localStorage.getItem(key);
+    return v !== null ? JSON.parse(v) : fallback;
+  } catch(e) { return fallback; }
+}
+function lsSet(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+}
+
+/* =====================================================
+   頁面切換
+===================================================== */
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  else document.querySelector(`[data-page="${id}"]`)?.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* =====================================================
+   PLAN 頁渲染（可折疊 + 今天標記）
+===================================================== */
+// 旅行開始日期（用來計算「今天是第幾天」）
+const TRIP_START = new Date('2026-04-18');
+
+function getTripDay() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const start = new Date(TRIP_START);
+  start.setHours(0,0,0,0);
+  const diff = Math.floor((today - start) / 86400000);
+  return diff + 1; // Day 1 = 4/18
+}
+
+let planMustOnly = false;
+let planOpenDays = {}; // { dayNum: true/false }
+
+function renderPlan() {
+  const container = document.getElementById('plan-container');
+  container.innerHTML = '';
+  const todayDay = getTripDay();
+  const tagMap = { must:'tag-must', skip:'tag-skip', family:'tag-easy', easy:'tag-easy' };
+  const tagLabel = { must:'必做', skip:'可刪', family:'親子', easy:'省力版' };
+
+  itinerary.forEach((day) => {
+    const isToday = day.day === todayDay;
+    const isOpen = planOpenDays[day.day] !== undefined ? planOpenDays[day.day] : (isToday || day.day <= 2);
+
+    const filteredItems = planMustOnly
+      ? day.items.filter(i => i.tags.includes('must') || day.alert)
+      : day.items;
+
+    const itemsHtml = filteredItems.map(item => `
+      <div style="display:flex;gap:10px;margin-bottom:8px;align-items:flex-start;">
+        <div style="flex-shrink:0;width:48px;text-align:right;">
+          <span class="time-chip">${item.time}</span>
+        </div>
+        <div style="flex:1;">
+          <div style="font-size:13px;color:#3a2e26;line-height:1.5;">${item.text}</div>
+          <div style="margin-top:3px;">${item.tags.map(t=>`<span class="tag-chip ${tagMap[t]||'tag-easy'}">${tagLabel[t]||t}</span>`).join('')}</div>
+        </div>
+      </div>`).join('');
+
+    const alertHtml = day.alert ? `
+      <div style="background:${day.alert.type==='urgent'?'linear-gradient(135deg,#c8dde8,#e8c4a0)':'linear-gradient(135deg,#f5d9c8,#e8b4b8)'};
+        border-radius:12px;padding:12px;margin-bottom:12px;font-size:13px;font-weight:600;
+        color:${day.alert.type==='urgent'?'#1a2a3a':'#5a1a1a'};">
+        ${day.alert.text}
+      </div>` : '';
+
+    const todayBadge = isToday
+      ? `<span style="background:#c8a87a;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px;">今天</span>`
+      : '';
+
+    const div = document.createElement('div');
+    div.id = `plan-day-${day.day}`;
+    div.style.marginBottom = '12px';
+    div.innerHTML = `
+      <div class="card" style="border-left:4px solid ${day.color};padding:0;overflow:hidden;">
+        <!-- 標題列（可點擊折疊）-->
+        <div onclick="togglePlanDay(${day.day})"
+          style="display:flex;justify-content:space-between;align-items:center;
+          padding:14px 14px 14px 14px;cursor:pointer;
+          ${isToday?'background:linear-gradient(90deg,'+day.color+'44,transparent);':''}">
+          <div>
+            <div style="font-size:11px;color:#b5a89a;font-weight:600;margin-bottom:1px;">
+              Day ${day.day} · ${day.date} ${todayBadge}
+            </div>
+            <div style="font-weight:700;font-size:14px;color:#3a2e26;">${day.emoji} ${day.title}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <a href="https://maps.google.com/?q=${encodeURIComponent(day.title+' 名古屋')}" target="_blank"
+              onclick="event.stopPropagation()"
+              style="background:#f5ede3;color:#8c7b6e;font-size:10px;padding:4px 8px;border-radius:99px;text-decoration:none;white-space:nowrap;">
+              <i class="fa-solid fa-map-location-dot"></i>
+            </a>
+            <i class="fa-solid fa-chevron-${isOpen?'up':'down'}" id="plan-icon-${day.day}"
+              style="color:#c8a87a;font-size:12px;transition:transform .2s;"></i>
+          </div>
+        </div>
+        <!-- 可折疊內容 -->
+        <div id="plan-body-${day.day}" style="display:${isOpen?'block':'none'};padding:0 14px 14px;">
+          ${alertHtml}
+          ${itemsHtml}
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid #f5ede3;display:flex;align-items:center;gap:6px;">
+            <i class="fa-solid fa-hotel" style="color:#c8a87a;font-size:11px;"></i>
+            <span style="font-size:11px;color:#8c7b6e;">${day.stay}</span>
+          </div>
+        </div>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function togglePlanDay(dayNum) {
+  const body = document.getElementById(`plan-body-${dayNum}`);
+  const icon = document.getElementById(`plan-icon-${dayNum}`);
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  icon.className = `fa-solid fa-chevron-${isOpen?'down':'up'}`;
+  planOpenDays[dayNum] = !isOpen;
+}
+
+function planToggleAll(open) {
+  itinerary.forEach(day => {
+    const body = document.getElementById(`plan-body-${day.day}`);
+    const icon = document.getElementById(`plan-icon-${day.day}`);
+    if (body) { body.style.display = open ? 'block' : 'none'; planOpenDays[day.day] = open; }
+    if (icon) icon.className = `fa-solid fa-chevron-${open?'up':'down'}`;
+  });
+}
+
+function planJumpToday() {
+  const todayDay = getTripDay();
+  const el = document.getElementById(`plan-day-${todayDay}`);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // 強制展開今天
+    const body = document.getElementById(`plan-body-${todayDay}`);
+    const icon = document.getElementById(`plan-icon-${todayDay}`);
+    if (body) { body.style.display = 'block'; planOpenDays[todayDay] = true; }
+    if (icon) icon.className = 'fa-solid fa-chevron-up';
+  } else {
+    alert('旅行期間才能跳到今天喔 🗓');
+  }
+}
+
+function planShowOnlyMust() {
+  planMustOnly = true;
+  renderPlan();
+  planToggleAll(true);
+}
+
+function planShowAll() {
+  planMustOnly = false;
+  renderPlan();
+}
+
+/* =====================================================
+   FOOD 頁渲染
+===================================================== */
+let currentFoodFilter = 'all';
+function renderFood(filter) {
+  const grid = document.getElementById('food-grid');
+  const spots = filter === 'all' ? foodSpots : foodSpots.filter(f => f.categories.includes(filter));
+  const catLabel = { must:'必吃名古屋', budget:'高CP值', family:'親子', bbq:'吃到飽', sweets:'甜點', ramen:'拉麵', katsu:'豬排', eel:'鰻魚飯' };
+  const catClass = { must:'food-tag-must', budget:'food-tag-budget', family:'food-tag-family', bbq:'food-tag-bbq', sweets:'food-tag-sweets', ramen:'food-tag-ramen', katsu:'food-tag-katsu', eel:'food-tag-eel' };
+  grid.innerHTML = spots.map(f => `
+    <div class="food-card">
+      <div class="food-img-placeholder" style="background:${f.bgColor};" onclick="openFoodModal(${f.id})">${f.emoji}</div>
+      <div style="padding:10px;">
+        <div style="font-weight:700;font-size:13px;color:#3a2e26;margin-bottom:3px;line-height:1.3;">${f.name}</div>
+        <div style="font-size:10px;color:#8c7b6e;margin-bottom:6px;">${f.type}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;">
+          ${f.categories.slice(0,2).map(c=>`<span class="food-label ${catClass[c]||'food-tag-must'}">${catLabel[c]||c}</span>`).join('')}
+          ${f.needBook ? '<span class="food-label food-tag-book">建議訂位</span>' : ''}
+        </div>
+        <button onclick="openFoodModal(${f.id})" style="font-size:10px;color:#c8a87a;font-weight:600;background:none;border:none;cursor:pointer;padding:0;">詳細 →</button>
+      </div>
+    </div>`).join('');
+}
+function filterFood(cat, btn) {
+  currentFoodFilter = cat;
+  document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderFood(cat);
+}
+function openFoodModal(id) {
+  const f = foodSpots.find(x => x.id === id);
+  if (!f) return;
+  const catLabel = { must:'必吃名古屋', budget:'高CP值', family:'親子', bbq:'吃到飽', sweets:'甜點', ramen:'拉麵', katsu:'豬排', eel:'鰻魚飯' };
+  const catClass = { must:'food-tag-must', budget:'food-tag-budget', family:'food-tag-family', bbq:'food-tag-bbq', sweets:'food-tag-sweets', ramen:'food-tag-ramen', katsu:'food-tag-katsu', eel:'food-tag-eel' };
+  const modal = document.getElementById('food-modal');
+  document.getElementById('food-modal-content').innerHTML = `
+    <div style="font-size:36px;text-align:center;padding:16px 0;background:${f.bgColor};border-radius:16px;margin-bottom:14px;">${f.emoji}</div>
+    <div style="font-weight:700;font-size:18px;margin-bottom:4px;">${f.name}</div>
+    <div style="font-size:12px;color:#8c7b6e;margin-bottom:10px;">${f.type} · ${f.area}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;">
+      ${f.categories.map(c=>`<span class="food-label ${catClass[c]||'food-tag-must'}" style="font-size:11px;padding:3px 10px;">${catLabel[c]||c}</span>`).join('')}
+      ${f.needBook?'<span class="food-label food-tag-book" style="font-size:11px;padding:3px 10px;">建議訂位</span>':''}
+      ${f.family?'<span class="food-label food-tag-family" style="font-size:11px;padding:3px 10px;">親子友善</span>':''}
+      ${f.hot?'<span style="font-size:11px;padding:3px 10px;background:#fef0e0;color:#c05830;border-radius:99px;font-weight:600;">🔥 人氣</span>':''}
+    </div>
+    <div style="font-size:13px;line-height:1.7;color:#5c4a3a;margin-bottom:12px;">${f.desc}</div>
+    <div style="background:#f5ede3;border-radius:12px;padding:12px;font-size:12px;color:#8c7b6e;line-height:1.8;margin-bottom:14px;">
+      📅 推薦安排：${f.dayHint}<br/>
+      📍 區域：${f.area}<br/>
+      ${f.note ? '💬 備註：'+f.note : ''}
+      ${f.queue ? '<br/>⏳ 可能需要排隊' : ''}
+    </div>
+    <div style="display:flex;gap:8px;">
+      <a href="${f.mapsUrl}" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:#c8a87a;color:#fff;padding:11px;border-radius:12px;font-size:13px;font-weight:700;text-decoration:none;">
+        <i class="fa-solid fa-location-dot"></i> Google Maps
+      </a>
+      ${f.website ? `<a href="${f.website}" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:#f5ede3;color:#5c4a3a;padding:11px;border-radius:12px;font-size:13px;font-weight:700;text-decoration:none;"><i class="fa-solid fa-globe"></i> 官網</a>` : ''}
+    </div>`;
+  modal.classList.remove('hidden');
+}
+
+/* =====================================================
+   WALLET 記帳
+===================================================== */
+let walletEntries = lsGet('wallet_entries', []);
+function calcRate() {
+  const rate = parseFloat(document.getElementById('rate-input').value) || 4.65;
+  const expr = document.getElementById('jpy-input').value.trim();
+  let jpy = 0;
+  try { jpy = expr ? Math.round(eval(expr.replace(/[^0-9+\-*/.()]/g,'')) || 0) : 0; } catch(e) {}
+  document.getElementById('jpy-result').textContent = '¥ ' + jpy.toLocaleString();
+  document.getElementById('twd-result').textContent = 'NT$ ' + Math.round(jpy / rate).toLocaleString();
+}
+function previewTwd() {
+  const rate = parseFloat(document.getElementById('rate-input').value) || 4.65;
+  const jpy = parseFloat(document.getElementById('entry-jpy').value) || 0;
+  document.getElementById('entry-twd-preview').textContent = 'NT$ ' + Math.round(jpy / rate).toLocaleString();
+}
+let receiptDataUrl = null;
+function handleReceipt(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const MAX = 400;
+      let w = img.width, h = img.height;
+      if (w > h) { if (w > MAX) { h *= MAX/w; w = MAX; } }
+      else { if (h > MAX) { w *= MAX/h; h = MAX; } }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      receiptDataUrl = canvas.toDataURL('image/jpeg', 0.6);
+      const prev = document.getElementById('receipt-preview');
+      prev.src = receiptDataUrl; prev.style.display = 'block';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function addEntry() {
+  const name = document.getElementById('entry-name').value.trim();
+  const jpy = parseFloat(document.getElementById('entry-jpy').value) || 0;
+  const note = document.getElementById('entry-note').value.trim();
+  const rate = parseFloat(document.getElementById('rate-input').value) || 4.65;
+  if (!name || !jpy) { alert('請填入品項和金額'); return; }
+  const entry = {
+    id: Date.now(), name, jpy, note,
+    twd: Math.round(jpy / rate),
+    rate,
+    date: new Date().toLocaleString('zh-TW', {month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}),
+    img: receiptDataUrl || null,
+  };
+  walletEntries.unshift(entry);
+  lsSet('wallet_entries', walletEntries);
+  document.getElementById('entry-name').value = '';
+  document.getElementById('entry-jpy').value = '';
+  document.getElementById('entry-note').value = '';
+  document.getElementById('receipt-preview').style.display = 'none';
+  receiptDataUrl = null;
+  renderWallet();
+}
+function deleteEntry(id) {
+  walletEntries = walletEntries.filter(e => e.id !== id);
+  lsSet('wallet_entries', walletEntries);
+  renderWallet();
+}
+function clearAllEntries() {
+  if (confirm('確定要清空所有記帳紀錄嗎？')) {
+    walletEntries = []; lsSet('wallet_entries', []);
+    renderWallet();
+  }
+}
+function renderWallet() {
+  const list = document.getElementById('wallet-list');
+  const totalJpy = walletEntries.reduce((a,e) => a + e.jpy, 0);
+  const totalTwd = walletEntries.reduce((a,e) => a + e.twd, 0);
+  document.getElementById('total-jpy').textContent = '¥ ' + totalJpy.toLocaleString();
+  document.getElementById('total-twd').textContent = 'NT$ ' + totalTwd.toLocaleString();
+  if (!walletEntries.length) {
+    list.innerHTML = '<div style="text-align:center;color:#b5a89a;font-size:13px;padding:24px 0;">還沒有消費記錄</div>';
+    return;
+  }
+  list.innerHTML = walletEntries.map(e => `
+    <div class="wallet-row">
+      <div class="wallet-thumb">
+        ${e.img ? `<img src="${e.img}" style="width:44px;height:44px;border-radius:10px;object-fit:cover;" alt=""/>` : '<i class="fa-solid fa-receipt" style="color:#c8a87a;"></i>'}
+      </div>
+      <div style="flex:1;">
+        <div style="font-weight:600;font-size:13px;color:#3a2e26;">${e.name}</div>
+        ${e.note ? `<div style="font-size:11px;color:#8c7b6e;">${e.note}</div>` : ''}
+        <div style="font-size:10px;color:#b5a89a;">${e.date}</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-weight:700;font-size:14px;color:#3a2e26;">¥${e.jpy.toLocaleString()}</div>
+        <div style="font-size:11px;color:#c8a87a;">NT$${e.twd.toLocaleString()}</div>
+      </div>
+      <button onclick="deleteEntry(${e.id})" style="background:none;border:none;color:#b5a89a;font-size:15px;padding:4px;cursor:pointer;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>`).join('');
+}
+function exportCSV() {
+  if (!walletEntries.length) { alert('沒有記帳資料'); return; }
+  const header = '日期,品項,備註,日幣,台幣,匯率';
+  const rows = walletEntries.map(e =>
+    `"${e.date}","${e.name}","${e.note||''}",${e.jpy},${e.twd},${e.rate}`
+  );
+  const csv = '\ufeff' + header + '\n' + rows.join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url;
+  a.download = 'nagoya-wallet.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* =====================================================
+   LISTS 清單
+===================================================== */
+let checklist = lsGet('checklist', defaultChecklist);
+let souvenirList = lsGet('souvenir', defaultSouvenir);
+function switchListTab(tab) {
+  ['check','memo','souvenir'].forEach(t => {
+    document.getElementById('list-section-'+t).style.display = t===tab ? 'block' : 'none';
+    const btn = document.getElementById('list-tab-'+t);
+    btn.style.background = t===tab ? '#c8a87a' : '#fff';
+    btn.style.color = t===tab ? '#fff' : '#8c7b6e';
+  });
+  if (tab === 'memo') renderMemoPreview();
+}
+function renderChecklist() {
+  const container = document.getElementById('checklist-container');
+  const groups = {};
+  checklist.forEach(item => {
+    const cat = item.category || '其他';
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push(item);
+  });
+  container.innerHTML = Object.entries(groups).map(([cat, items]) => `
+    <div style="margin-bottom:12px;">
+      <div style="font-size:10px;font-weight:700;color:#c8a87a;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">${cat}</div>
+      ${items.map(item => `
+        <div class="check-item ${item.done?'done':''}" id="ci-${item.id}">
+          <input type="checkbox" ${item.done?'checked':''} onchange="toggleCheck(${item.id})"/>
+          <label style="font-size:13px;color:#3a2e26;cursor:pointer;" onclick="toggleCheck(${item.id})">${item.text}</label>
+          <button onclick="deleteCheck(${item.id})" style="background:none;border:none;color:#d0c0b0;font-size:13px;margin-left:auto;cursor:pointer;flex-shrink:0;"><i class="fa-solid fa-xmark"></i></button>
+        </div>`).join('')}
+    </div>`).join('');
+}
+function toggleCheck(id) {
+  checklist = checklist.map(i => i.id===id ? {...i, done:!i.done} : i);
+  lsSet('checklist', checklist);
+  renderChecklist();
+}
+function deleteCheck(id) {
+  checklist = checklist.filter(i => i.id !== id);
+  lsSet('checklist', checklist);
+  renderChecklist();
+}
+function addCheckItem() {
+  const input = document.getElementById('new-check-input');
+  const text = input.value.trim();
+  if (!text) return;
+  checklist.push({ id: Date.now(), text, done: false, category: '自訂' });
+  lsSet('checklist', checklist);
+  input.value = '';
+  renderChecklist();
+}
+function renderSouvenir() {
+  const container = document.getElementById('souvenir-container');
+  container.innerHTML = souvenirList.map(item => `
+    <div class="check-item ${item.done?'done':''}">
+      <input type="checkbox" ${item.done?'checked':''} onchange="toggleSouvenir(${item.id})"/>
+      <label style="font-size:13px;color:#3a2e26;cursor:pointer;" onclick="toggleSouvenir(${item.id})">${item.text}</label>
+      <button onclick="deleteSouvenir(${item.id})" style="background:none;border:none;color:#d0c0b0;font-size:13px;margin-left:auto;cursor:pointer;flex-shrink:0;"><i class="fa-solid fa-xmark"></i></button>
+    </div>`).join('');
+}
+function toggleSouvenir(id) {
+  souvenirList = souvenirList.map(i => i.id===id ? {...i,done:!i.done} : i);
+  lsSet('souvenir', souvenirList);
+  renderSouvenir();
+}
+function deleteSouvenir(id) {
+  souvenirList = souvenirList.filter(i => i.id !== id);
+  lsSet('souvenir', souvenirList);
+  renderSouvenir();
+}
+function addSouvenirItem() {
+  const input = document.getElementById('new-souvenir-input');
+  const text = input.value.trim();
+  if (!text) return;
+  souvenirList.push({ id: Date.now(), text, done: false });
+  lsSet('souvenir', souvenirList);
+  input.value = '';
+  renderSouvenir();
+}
+function saveMemo() {
+  lsSet('memo', document.getElementById('memo-textarea').value);
+  renderMemoPreview();
+}
+function renderMemoPreview() {
+  let text = document.getElementById('memo-textarea').value || '';
+  const urlPattern = /(https?:\/\/[^\s]+)/g;
+  const html = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\n/g,'<br/>')
+    .replace(urlPattern, '<a href="$1" target="_blank" style="color:#c8a87a;word-break:break-all;">$1</a>');
+  document.getElementById('memo-preview').innerHTML = html;
+}
+function loadMemo() {
+  const v = lsGet('memo', '');
+  document.getElementById('memo-textarea').value = v;
+  renderMemoPreview();
+}
+
+/* =====================================================
+   INFO FAQ
+===================================================== */
+function renderFAQ() {
+  const container = document.getElementById('faq-container');
+  container.innerHTML = faqData.map((f,i) => `
+    <div style="margin-bottom:8px;">
+      <button onclick="toggleFaq(${i})" style="width:100%;text-align:left;background:#fff;border-radius:14px;padding:14px 16px;border:none;cursor:pointer;box-shadow:0 2px 10px rgba(92,74,58,.06);display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:13px;font-weight:600;color:#3a2e26;">${f.q}</span>
+        <i class="fa-solid fa-chevron-down" id="faq-icon-${i}" style="color:#c8a87a;font-size:12px;transition:transform .2s;flex-shrink:0;margin-left:8px;"></i>
+      </button>
+      <div id="faq-body-${i}" class="accordion-body" style="padding:0 16px 12px;font-size:13px;color:#5c4a3a;line-height:1.7;">${f.a}</div>
+    </div>`).join('');
+}
+function toggleFaq(i) {
+  const body = document.getElementById('faq-body-'+i);
+  const icon = document.getElementById('faq-icon-'+i);
+  body.classList.toggle('open');
+  icon.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : '';
+}
+
+/* =====================================================
+   憑證照片系統
+   ★ 預設憑證清單 — 要改名稱請改這個陣列 ★
+===================================================== */
+const defaultVouchers = [
+  { id: 'flight-out',      label: '去程機票',              icon: '✈️', desc: 'IT206 · 4/18 09:00 · K9B4YG' },
+  { id: 'flight-back',     label: '回程機票',              icon: '✈️', desc: 'IT207 · 4/25 13:45 · K9B4YG' },
+  { id: 'kkday-a',         label: 'KKday 馬籠宿',          icon: '🏯', desc: '4/20 一日遊' },
+  { id: 'kkday-b',         label: 'KKday 立山黑部',        icon: '🏔️', desc: '4/21–4/23 · 26KK243870236' },
+  { id: 'hotel-a',         label: 'VIA INN 確認信',        icon: '🏨', desc: 'CCP563999 · 4/18–4/20' },
+  { id: 'hotel-b',         label: 'VIA INN 換房確認',      icon: '🏨', desc: 'NHU592065 · 4/20–4/21' },
+  { id: 'hotel-c',         label: '竹亭高級確認信',        icon: '🏨', desc: 'KKC652959 · 4/23–4/25' },
+  { id: 'vjw-linpeichen',  label: 'VJW · 林佩瑨',         icon: '🛂', desc: 'LIN PEI CHEN · 入境QR Code' },
+  { id: 'vjw-wuchenglung', label: 'VJW · 吳承龍',         icon: '🛂', desc: 'WU CHENG LUNG · 入境QR Code' },
+  { id: 'vjw-wuyuetung',   label: 'VJW · 吳玥彤',         icon: '🛂', desc: 'WU YUE TUNG · 入境QR Code' },
+  { id: 'transfer-out',    label: '去程接送憑證',          icon: '🚗', desc: 'F15136926 · 4/18 05:00 出發' },
+  { id: 'transfer-back',   label: '回程接送憑證',          icon: '🚗', desc: 'F15136951 · 4/25 15:50 抵達' },
+  { id: 'insurance-1',     label: '旅平險 · 林佩瑨',       icon: '🛡️', desc: 'PDF 截圖存這裡' },
+  { id: 'insurance-2',     label: '旅平險 · 吳承龍',       icon: '🛡️', desc: 'PDF 截圖存這裡' },
+  { id: 'insurance-3',     label: '旅平險 · 吳玥彤',       icon: '🛡️', desc: 'PDF 截圖存這裡' },
+];
+
+function voucherKey(id) { return 'voucher_img_' + id; }
+
+function compressAndStore(file, id, callback) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const MAX = 1200; // 憑證需要看清文字，解析度高一點
+      let w = img.width, h = img.height;
+      if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+      if (h > MAX) { w = Math.round(w * MAX / h); h = MAX; }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const data = canvas.toDataURL('image/jpeg', 0.82);
+      lsSet(voucherKey(id), data);
+      callback(data);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderVouchers() {
+  const grid = document.getElementById('voucher-grid');
+  if (!grid) return;
+  grid.innerHTML = defaultVouchers.map(v => {
+    const img = lsGet(voucherKey(v.id), null);
+    return `
+      <div class="card" style="margin:0;padding:14px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <!-- 縮圖 or 空白佔位 -->
+          <div style="flex-shrink:0;width:72px;height:72px;border-radius:12px;overflow:hidden;background:#f5ede3;display:flex;align-items:center;justify-content:center;cursor:${img?'pointer':'default'};"
+            onclick="${img ? `openVoucherViewer('${v.id}')` : ''}">
+            ${img
+              ? `<img src="${img}" style="width:100%;height:100%;object-fit:cover;" alt="${v.label}"/>`
+              : `<span style="font-size:28px;">${v.icon}</span>`
+            }
+          </div>
+          <!-- 文字 + 按鈕 -->
+          <div style="flex:1;min-width:0;">
+            <div style="font-weight:700;font-size:14px;color:#3a2e26;margin-bottom:2px;">${v.label}</div>
+            <div style="font-size:11px;color:#8c7b6e;margin-bottom:8px;">${v.desc}</div>
+            <div style="display:flex;gap:6px;">
+              <label style="display:inline-flex;align-items:center;gap:5px;background:#f5ede3;color:#5c4a3a;font-size:11px;font-weight:700;padding:5px 10px;border-radius:99px;cursor:pointer;">
+                <i class="fa-solid fa-camera" style="color:#c8a87a;"></i>
+                ${img ? '重新上傳' : '上傳照片'}
+                <input type="file" accept="image/*" style="display:none;"
+                  onchange="uploadVoucher(this,'${v.id}')"/>
+              </label>
+              ${img ? `
+                <button onclick="openVoucherViewer('${v.id}')"
+                  style="display:inline-flex;align-items:center;gap:5px;background:#f5ede3;color:#5c4a3a;font-size:11px;font-weight:700;padding:5px 10px;border-radius:99px;border:none;cursor:pointer;">
+                  <i class="fa-solid fa-expand" style="color:#c8a87a;"></i> 查看
+                </button>
+                <button onclick="deleteVoucher('${v.id}')"
+                  style="background:none;border:none;color:#d0b8a8;font-size:13px;padding:5px;cursor:pointer;">
+                  <i class="fa-solid fa-trash"></i>
+                </button>` : ''}
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function uploadVoucher(input, id) {
+  const file = input.files[0];
+  if (!file) return;
+  compressAndStore(file, id, () => renderVouchers());
+}
+
+function deleteVoucher(id) {
+  if (!confirm('刪除這張憑證照片？')) return;
+  try { localStorage.removeItem(voucherKey(id)); } catch(e) {}
+  renderVouchers();
+}
+
+function openVoucherViewer(id) {
+  const img = lsGet(voucherKey(id), null);
+  if (!img) return;
+  const v = defaultVouchers.find(x => x.id === id);
+  const overlay = document.getElementById('voucher-viewer');
+  document.getElementById('voucher-viewer-img').src = img;
+  document.getElementById('voucher-viewer-label').textContent = v ? v.label : '';
+  overlay.classList.remove('hidden');
+  // 雙指縮放支援 (pinch zoom via CSS)
+  document.getElementById('voucher-viewer-img').style.transform = 'scale(1)';
+}
+
+/* =====================================================
+   FOOD MODAL
+===================================================== */
+document.addEventListener('DOMContentLoaded', function() {
+  // Food modal overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay hidden';
+  overlay.id = 'food-modal';
+  overlay.innerHTML = `
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div id="food-modal-content"></div>
+      <button onclick="document.getElementById('food-modal').classList.add('hidden')"
+        style="width:100%;margin-top:14px;background:#f5ede3;color:#8c7b6e;border:none;border-radius:14px;padding:12px;font-size:13px;font-weight:700;cursor:pointer;">
+        關閉
+      </button>
+    </div>`;
+  overlay.addEventListener('click', e => { if(e.target===overlay) overlay.classList.add('hidden'); });
+  document.body.appendChild(overlay);
+
+  // 憑證全螢幕 Viewer
+  const vviewer = document.createElement('div');
+  vviewer.id = 'voucher-viewer';
+  vviewer.className = 'hidden';
+  vviewer.style.cssText = 'position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.92);display:flex;flex-direction:column;';
+  vviewer.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;padding-top:calc(16px + env(safe-area-inset-top));">
+      <div id="voucher-viewer-label" style="color:#fff;font-size:14px;font-weight:700;"></div>
+      <button onclick="document.getElementById('voucher-viewer').classList.add('hidden')"
+        style="background:rgba(255,255,255,.15);border:none;color:#fff;width:34px;height:34px;border-radius:99px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div style="flex:1;overflow:auto;display:flex;align-items:center;justify-content:center;padding:10px;">
+      <img id="voucher-viewer-img" src="" alt="憑證"
+        style="max-width:100%;max-height:100%;border-radius:12px;object-fit:contain;touch-action:pinch-zoom;"/>
+    </div>
+    <div style="text-align:center;padding:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom));color:rgba(255,255,255,.4);font-size:11px;">
+      雙指可縮放 · 點右上角關閉
+    </div>`;
+  vviewer.addEventListener('click', e => { if(e.target===vviewer) vviewer.classList.add('hidden'); });
+  document.body.appendChild(vviewer);
+
+  // Init all pages
+  renderPlan();
+  renderFood('all');
+  renderWallet();
+  renderChecklist();
+  renderSouvenir();
+  loadMemo();
+  renderFAQ();
+  renderVouchers();
+});
+
+/* =====================================================
+   SERVICE WORKER 註冊
+===================================================== */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+</script>
+
+</body>
+</html>
